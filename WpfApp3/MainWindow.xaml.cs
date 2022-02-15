@@ -21,24 +21,11 @@ namespace WpfApp3
     public partial class MainWindow : Window
     {
         List<Friend> ar = new List<Friend>();
-        Friend friends = new Friend("",0,"");
+        Friend friends = new Friend(false,"",0,"");
+
         public MainWindow()
         {
             InitializeComponent();
-            //return;
-            /////////////////////////////////
-            //string[] items = new string[] { "강호동", "유재석", "홍길동" };
-            //this.ListBox.Items.Add(items[0]);
-            //this.ListBox.Items.Add(items[1]);
-            //this.ListBox.Items.Add(items[2]);
-            /////////////////////////////////
-            //Friend[] friends = new Friend[] { new Friend("홍길동", 10, "남성"),
-            //                                new Friend("김길동", 20, "여성"),
-            //                                new Friend("장길동", 30, "여성") };
-            //foreach (var item in friends)
-            //{
-            //    this.ListView.Items.Add(item);
-            //}
         }
 
         // 추가 버튼
@@ -46,7 +33,7 @@ namespace WpfApp3
         {
             if(CheckBox.IsChecked == true)
                 MessageBox.Show("안내장을 발송합니다");
-            Friend friends = new Friend("", 0, "");
+            Friend friends = new Friend(false,"", 0, "");
             friends.Name = NameBox.Text;
             friends.Age = Convert.ToInt32(AgeBox.Text);
             if (radio_M_Btn.IsChecked == true)
@@ -72,25 +59,33 @@ namespace WpfApp3
         // 삭제 버튼
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
+            for (int i = this.ListView.Items.Count - 1; i >= 0; i--)
+            {
+                Friend fr = (Friend)ListView.Items[i];
+                if (fr.Selected==true)
+                {
+                    ListView.Items.RemoveAt(i);
+                    ar.RemoveAt(i);
+                }
+            }
+            MessageBox.Show("삭제");
         }
     }
     public class Friend
     {
         // 프로퍼티 (Properties)
+        public bool Selected { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }
         public string Gender { get; set; }
-        //public bool gender {
-        //    get { if (true) return gender; }
-        //    set { gender = value; } 
-        //}
 
-        public Friend(string _name, int _age, string _gender)
+        public Friend(bool _selected, string _name, int _age, string _gender)
         {
+            Selected = _selected;
             Name = _name;
             Age = _age;
             Gender = _gender;
         }
     }
+
 }

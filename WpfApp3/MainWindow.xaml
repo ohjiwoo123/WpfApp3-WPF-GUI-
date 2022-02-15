@@ -6,6 +6,13 @@
         xmlns:local="clr-namespace:WpfApp3"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="1000">
+    <Window.Resources>
+        <DataTemplate x:Key="FirstCell">
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Name="CheckBox2" Checked="CheckBox2_Checked" Unchecked="CheckBox2_Unchecked" IsChecked="{Binding Selected}"/>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
         <TextBox x:Name="NameBox" HorizontalAlignment="Left" Margin="106,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="AgeBox" HorizontalAlignment="Left" Margin="106,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
@@ -16,12 +23,16 @@
         <CheckBox x:Name="CheckBox" Content="안내장요청" HorizontalAlignment="Left" Margin="74,254,0,0" VerticalAlignment="Top"/>
         <Button Content="회원가입" HorizontalAlignment="Left" Margin="41,314,0,0" VerticalAlignment="Top" Height="76" Width="125" Click="Button_Click"/>
         <ListBox x:Name="ListBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="388,34,112,374"/>
-        <ListView x:Name="ListView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="388,262,112,111">
+        <ListView x:Name="ListView" ItemsSource="{Binding}" Margin="388,262,112,111">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="100"/>
-                    <GridViewColumn Header="Age" DisplayMemberBinding="{Binding Age}" Width="100"/>
-                    <GridViewColumn Header="Gender" DisplayMemberBinding="{Binding Gender}" Width="100"/>
+                    <GridView.Columns>
+                        <GridViewColumn Header="Selected" CellTemplate="{StaticResource FirstCell}" 
+                Width="100"/>
+                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="100"/>
+                        <GridViewColumn Header="Age" DisplayMemberBinding="{Binding Age}" Width="100"/>
+                        <GridViewColumn Header="Gender" DisplayMemberBinding="{Binding Gender}" Width="100"/>
+                    </GridView.Columns>
                 </GridView>
             </ListView.View>
         </ListView>
